@@ -38,19 +38,19 @@ input {
 table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 60%;
 }
 
-td, th {
+td, thead {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-tr:nth-child(odd ){background-color: #f2f2f2;}
+tr:nth-child(even){background-color: #f2f2f2;}
 
 tr:hover {background-color: #ddd;}
 
- th {
+thead {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
