@@ -4,6 +4,7 @@ const bin_version = "65f0ba97dc74654018b1fe10";
 
 export const getData = async () => {
 	const dataItem = await fetch(`https://api.jsonbin.io/v3/b/${bin_version}`, {
+		cache: "no-cache",
 		headers: { "X-Master-Key": "$2b$10$36wvnzpKZqVs9l1ZsHS2jON.JWV9pBcgmU98Oce5jnCYheagDHuyq" },
 	}).then((res) => res.json());
 
