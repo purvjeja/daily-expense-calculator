@@ -66,7 +66,7 @@ export const RenderTable = ({ data }: { data: IExpenseItem[] }) => {
 					</div>
 				</div>
 			) : (
-				<h1 className="text-xl font-bold">No Data to show, Please add some.</h1>
+				<h1 className="text-xl dark:font-bold">No data to show, Please add some.</h1>
 			)}{" "}
 		</div>
 	);
