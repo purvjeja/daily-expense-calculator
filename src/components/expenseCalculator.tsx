@@ -17,7 +17,8 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 	const [item, setItem] = useState<IExpenseItem>({ expenseName: "", price: 0, startDate: 0, tillDate: 0, isGoingToBePermanent: false });
 	const [data, setData] = useState<IExpenseItem[]>([]);
 	const [currentActiveTab, setCurrentActiveTab] = useState<"add" | "show">("add");
-	const [isDark, setIsDark] = useState<Boolean>();
+	const [isDark, setIsDark] = useState<Boolean>(false);
+	const [userNameState, setUserNameState] = useState<string>("");
 
 	const updateItem = (itemName: keyof IExpenseItem, value: string | number | boolean) => {
 		const currentInputObject = item;
@@ -37,6 +38,7 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 
 	useEffect(() => {
 		const userName = localStorage.getItem("userName");
+
 		if (!userName) {
 			addNewUser();
 		} else {
@@ -44,19 +46,18 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 			setUserDetailsToLocalStorage(userName);
 			setData(APIdata[userName]["expenses"] || []);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
-	useEffect(() => {
 		setIsDark(setTheme() === "dark");
+		setUserNameState(userName || "");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<div className="flex gap-10 items-center flex-col m-3">
 			<div className="w-[98%] flex justify-between items-center min-h-fit p-3 pr-7 dark:bg-black rounded-xl">
 				<div className="flex items-center gap-2">
-					<Avatar sx={{ bgcolor: deepOrange[500] }}>{localStorage.getItem("userName")?.charAt(0).toUpperCase() || ""}</Avatar>
-					<div>Hi {localStorage.getItem("userName")?.toUpperCase() || ""}</div>
+					<Avatar sx={{ bgcolor: deepOrange[500] }}>{userNameState?.charAt(0).toUpperCase() || ""}</Avatar>
+					<div>Hi {userNameState?.toUpperCase()}</div>
 				</div>
 				<button
 					onClick={() => {
