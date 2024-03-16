@@ -25,11 +25,11 @@ export const updateUser = async (userName: string, userObject: IUser) => {
 	let dataObject = data;
 	dataObject[userName] = userObject;
 	const responseData = postData(dataObject);
-	setUserDetailsToLocalStorage(userName, userObject);
+	setUserDetailsToLocalStorage(userName);
 	return responseData;
 };
 
-export const setUserDetailsToLocalStorage = (userName: string, userObject: IUser) => {
+export const setUserDetailsToLocalStorage = (userName: string) => {
 	localStorage.setItem("userName", userName);
-	localStorage.setItem("userObject", JSON.stringify(userObject));
+	// localStorage.setItem("userObject", JSON.stringify(userObject));
 };

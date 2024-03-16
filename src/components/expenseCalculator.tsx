@@ -22,7 +22,7 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 		if (!inputedName) addNewUser();
 		else {
 			if (Object.keys(APIdata).includes(inputedName)) {
-				setUserDetailsToLocalStorage(inputedName, APIdata[inputedName]);
+				setUserDetailsToLocalStorage(inputedName);
 				setData(APIdata[inputedName]["expenses"]);
 			} else await updateUser(inputedName, { expenses: [] });
 		}
@@ -33,8 +33,9 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 		if (!userName) {
 			addNewUser();
 		} else {
-			setUserDetailsToLocalStorage(userName, APIdata[userName]);
-			setData(APIdata[userName]["expenses"]);
+			console.log(APIdata[userName]);
+			setUserDetailsToLocalStorage(userName);
+			setData(APIdata[userName]["expenses"] || []);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
