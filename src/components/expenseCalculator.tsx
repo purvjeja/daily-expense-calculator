@@ -54,7 +54,7 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 
 	return (
 		<div className="flex gap-10 items-center flex-col m-3">
-			<div className="w-[98%] flex justify-between items-center min-h-fit p-3 pr-7 dark:bg-black rounded-xl">
+			<div className="w-[98%] flex justify-between items-center min-h-fit p-3 pr-7 dark:bg-gray-900 rounded-xl">
 				<div className="flex items-center gap-2">
 					<Avatar sx={{ bgcolor: deepOrange[500] }}>{userNameState?.charAt(0).toUpperCase() || ""}</Avatar>
 					<div>Hi {userNameState?.toUpperCase()}</div>
@@ -68,54 +68,53 @@ export const ExpenseCalculator = ({ APIdata }: { APIdata: IAPIStructure }) => {
 					{isDark ? "☀️" : "🌑"}{" "}
 				</button>
 			</div>
-			<div className="w-[98%]">
-				<Tabs
-					value={currentActiveTab}
-					variant="fullWidth"
-					allowScrollButtonsMobile
-					scrollButtons
-					onChange={(event: React.SyntheticEvent, newValue: "add" | "show") => setCurrentActiveTab(newValue)}>
-					<Tab className="text-xs" value="add" label="Add Expense" />
-					<Tab value="show" className="text-xs" label="Show Expense" />
-					<Tab value="graph" className="text-xs" label="Graph" disabled />
-				</Tabs>
+			<div className="w-full flex justify-center	 gap-5">
+				<div
+					className={`text-xs p-3 ${currentActiveTab == "add" ? "bg-gray-900 rounded font-medium" : "border border-black rounded"}`}
+					onClick={() => setCurrentActiveTab("add")}>
+					Add Expenses
+				</div>
+				<div className={`text-xs p-3 ${currentActiveTab == "show" ? "bg-gray-900 rounded" : "border border-black rounded"}`} onClick={() => setCurrentActiveTab("show")}>
+					Expenses List
+				</div>
+				{/* <div value="graph" className="text-xs" label="Graph" disabled></div> */}
 			</div>
 			{currentActiveTab == "add" ? (
 				<div className="flex flex-col gap-5 w-full overflow-auto max-w-fit">
-					<TextField value={item.expenseName} onChange={(e) => updateItem("expenseName", e.target.value)} label="What is your expense today?" variant="standard" />
+					<input value={item.expenseName} onChange={(e) => updateItem("expenseName", e.target.value)} placeholder="What is your expense today?" />
 
-					<TextField value={item.price == 0 ? "" : item.price} onChange={(e) => updateItem("price", e.target.value)} label="at what price?" variant="standard" />
+					<input value={item.price == 0 ? "" : item.price} onChange={(e) => updateItem("price", e.target.value)} placeholder="at what price?" />
 
 					<div className="flex gap-2 flex-col">
 						<label>on?</label>
-						<input type="date" onChange={(e) => updateItem("startDate", new Date(e.target.value).getTime())}></input>
-						{/* <DateTimePicker /> */}
+						<input type="date" onChange={(e) => updateItem("startDate", new Date(e.target.value).getTime())} placeholder="DD/MM/YYY" />
 					</div>
 
 					<div className="flex gap-2">
-						<Switch value={item.isGoingToBePermanent} onChange={(e) => updateItem("isGoingToBePermanent", e.target.checked)}></Switch>
-						{/* <input type="checkbox" onChange={}></input> */}
+						<Switch
+							TouchRippleProps={{ color: "black" }}
+							value={item.isGoingToBePermanent}
+							onChange={(e) => updateItem("isGoingToBePermanent", e.target.checked)}></Switch>
 						<label>Is this expense till particular date?</label>
 					</div>
 					{item.isGoingToBePermanent && (
 						<div className="flex gap-2 flex-col">
 							<label>till ?</label>
-							<input type="date" onChange={(e) => updateItem("tillDate", new Date(e.target.value).getTime())}></input>
-							{/* <DateTimePicker /> */}
+							<input type="date" onChange={(e) => updateItem("tillDate", new Date(e.target.value).getTime())} placeholder="DD/MM/YYY" />
 						</div>
 					)}
 
-					<Button
+					<button
+						className="w-full border border-gray-900 text-white font-bold p-3"
 						onClick={() => {
 							setItem({ expenseName: "", price: 0, startDate: 0, tillDate: 0, isGoingToBePermanent: false });
 							const customItem = { ...item, id: data.length + 1 };
 							setData([...data, customItem]);
 							updateUser(localStorage.getItem("userName")!, { expenses: [...data, customItem] });
 							setCurrentActiveTab("show");
-						}}
-						variant="text">
+						}}>
 						Add
-					</Button>
+					</button>
 				</div>
 			) : (
 				<RenderTable data={data} />
