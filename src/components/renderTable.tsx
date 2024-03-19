@@ -1,9 +1,9 @@
 import { IExpenseItem } from "@/interface/main.interface";
-import { calculateDailyPrice, calculateDateDifference } from "@/util/calculations";
+import { calculateDailyPrice, calculateDateDifference, isExpenseTillToday } from "@/util/calculations";
 import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-export const RenderTable = ({ data }: { data: IExpenseItem[] }) => {
+export const RenderTable = ({ data, isDark }: { data: IExpenseItem[]; isDark: Boolean }) => {
 	const columns: GridColDef[] = [
 		{
 			field: "expenseName",
@@ -40,30 +40,39 @@ export const RenderTable = ({ data }: { data: IExpenseItem[] }) => {
 	}));
 
 	return (
-		<div className="w-full flex flex-col items-center max-w-fit">
+		<div className="w-full flex flex-col gap-5 items-center max-w-fit">
+			<div className="whitespace-nowrap text-[14px]">
+				{`Today's Daily Expense Rate: `}
+				<span className="text-white font-bold">
+					₹{" "}
+					{parseFloat(
+						String(
+							data.reduce((accumulator, d) => {
+								const expenseDailyCount = !d.isGoingToBePermanent
+									? Number(calculateDailyPrice(d.isGoingToBePermanent ? d.tillDate : new Date().getTime(), d.startDate, d.price))
+									: isExpenseTillToday(d)
+									? Number(calculateDailyPrice(d.isGoingToBePermanent ? d.tillDate : new Date().getTime(), d.startDate, d.price))
+									: 0;
+								return accumulator + expenseDailyCount;
+							}, 0),
+						),
+					).toFixed(2)}{" "}
+					/-
+				</span>
+			</div>
 			{data.length ? (
-				<div className="flex flex-col justify-center items-center gap-5">
+				<div className="flex flex-col justify-center items-center mx-3 gap-5">
 					<Box sx={{ overflow: "auto" }}>
 						<Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
-							<DataGrid rows={rows} columns={columns} checkboxSelection disableRowSelectionOnClick />
+							<DataGrid
+								sx={{ border: isDark ? "2px solid wheat" : "2px solid rgba(5, 17, 35)", color: isDark ? "wheat" : "rgba(5, 17, 35)" }}
+								rows={rows}
+								columns={columns}
+								checkboxSelection
+								disableRowSelectionOnClick
+							/>
 						</Box>
 					</Box>
-					<div>
-						{`Today's Daily Expense Rate: `}
-						<span className="bg-black text-white font-bold text-[18px] p-2 rounded whitespace-nowrap">
-							₹{" "}
-							{parseFloat(
-								String(
-									data.reduce(
-										(accumulator, d) =>
-											accumulator + Number(calculateDailyPrice(d.isGoingToBePermanent ? d.tillDate : new Date().getTime(), d.startDate, d.price)),
-										0,
-									),
-								),
-							).toFixed(2)}{" "}
-							/-
-						</span>
-					</div>
 				</div>
 			) : (
 				<h1 className="text-xl dark:font-bold">No data to show, Please add some.</h1>
