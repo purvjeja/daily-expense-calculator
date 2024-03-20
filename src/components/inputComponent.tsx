@@ -39,14 +39,14 @@ export const InputComponent = ({ onInputCallBack }: { onInputCallBack: (data: IE
 	return (
 		<div className="flex flex-col gap-5 mt-8 overflow-auto w-11/12">
 			<input
-				className="dark:bg-blue-950"
+				className="dark:bg-blue-950 text-navy dark:text-wheat"
 				type="text"
 				value={item.expenseName}
 				onChange={(e) => updateItem("expenseName", e.target.value)}
 				placeholder="What is your expense today?"
 			/>
 			<input
-				className="dark:bg-blue-950"
+				className="dark:bg-blue-950 text-navy dark:text-wheat"
 				type="number"
 				value={item.price == 0 ? "" : item.price}
 				onChange={(e) => updateItem("price", e.target.value)}
@@ -60,14 +60,14 @@ export const InputComponent = ({ onInputCallBack }: { onInputCallBack: (data: IE
 
 			{!sameDayExpense ? (
 				<>
-					<div className="flex gap-2">
+					<div className="flex items-center gap-2">
 						<Switch value={item.isGoingToBePermanent} onChange={(e) => updateItem("isGoingToBePermanent", e.target.checked)}></Switch>
 						<label>Is this expense till particular date?</label>
 					</div>
 					<div className="flex gap-2 flex-col">
 						<label>on?</label>
 						<input
-							className="dark:bg-blue-950 text-wheat"
+							className="dark:bg-blue-950 text-navy dark:text-wheat"
 							type="date"
 							onChange={(e) => updateItem("startDate", new Date(e.target.value).getTime())}
 							placeholder="DD/MM/YYY"
@@ -77,7 +77,7 @@ export const InputComponent = ({ onInputCallBack }: { onInputCallBack: (data: IE
 						<div className="flex gap-2 flex-col">
 							<label>till ?</label>
 							<input
-								className="dark:bg-blue-950 text-wheat"
+								className="dark:bg-blue-950 text-navy dark:text-wheat"
 								type="date"
 								onChange={(e) => updateItem("tillDate", new Date(e.target.value).getTime())}
 								placeholder="DD/MM/YYY"
