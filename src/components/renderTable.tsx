@@ -8,32 +8,39 @@ export const RenderTable = ({ data, isDark }: { data: IExpenseItem[]; isDark: Bo
 		{
 			field: "expenseName",
 			headerName: "Name",
-			width: 150,
+			width: 200,
+			editable: false,
+		},
+		{
+			field: "expenseDate",
+			headerName: "On",
+			width: 200,
 			editable: false,
 		},
 		{
 			field: "price",
 			headerName: "Price",
-			width: 150,
+			width: 200,
 			editable: false,
 		},
 		{
 			field: "sinceDaysOfExpense",
 			headerName: "Since Days of Expense",
-			width: 150,
+			width: 200,
 			editable: false,
 		},
 		{
 			field: "currentDailyPrice",
 			headerName: "Current Daily Price",
-			width: 150,
-			editable: false,
+			width: 200,
+			editable: true,
 		},
 	];
 
 	const rows = data.map((d) => ({
 		id: d.id,
 		expenseName: d.expenseName,
+		expenseDate: new Date(d.startDate).toLocaleDateString(),
 		price: d.price,
 		sinceDaysOfExpense: calculateDateDifference(d.isGoingToBePermanent ? d.tillDate : new Date().getTime(), d.startDate),
 		currentDailyPrice: calculateDailyPrice(d.isGoingToBePermanent ? d.tillDate : new Date().getTime(), d.startDate, d.price),

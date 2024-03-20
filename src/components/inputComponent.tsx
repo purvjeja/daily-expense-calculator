@@ -26,7 +26,7 @@ export const InputComponent = ({ onInputCallBack }: { onInputCallBack: (data: IE
 	const onAddClick = () => {
 		if (validateInputs()) {
 			if (sameDayExpense) {
-				onInputCallBack({ ...item, startDate: new Date().getTime(), tillDate: new Date().getTime() });
+				onInputCallBack({ ...item, isGoingToBePermanent: true, startDate: new Date().getTime(), tillDate: new Date().getTime() });
 				setItem({ expenseName: "", price: 0, startDate: 0, tillDate: 0, isGoingToBePermanent: false });
 			} else {
 				onInputCallBack(item);

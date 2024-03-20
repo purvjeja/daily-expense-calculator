@@ -19,16 +19,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html className="dark" lang="en">
-			<head>
+			<Head>
 				<link rel="icon" href="/public/favicon.ico" />
-				<Script
-					id="Absence-banner"
-					async
-					strategy="afterInteractive"
-					src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4808715803551092`}
-					crossOrigin="anonymous"
-				/>
-			</head>
+			</Head>
 			<body className={`${inter.className} bg-wheat text-navy dark:bg-navy dark:text-wheat`}>{children}</body>
 		</html>
 	);
