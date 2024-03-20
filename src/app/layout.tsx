@@ -20,6 +20,7 @@ export default function RootLayout({
 		<html className="dark" lang="en">
 			<Head>
 				<link rel="icon" href="/public/favicon.ico" />
+				<meta name="google-adsense-account" content="ca-pub-4808715803551092"></meta>
 			</Head>
 			<body className={`${inter.className} bg-wheat text-navy dark:bg-navy dark:text-wheat`}>{children}</body>
 		</html>
