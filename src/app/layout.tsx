@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,16 @@ export default function RootLayout({
 }>) {
 	return (
 		<html className="dark" lang="en">
-			<Head>
+			<head>
 				<link rel="icon" href="/public/favicon.ico" />
-				<meta name="google-adsense-account" content="ca-pub-4808715803551092"></meta>
-			</Head>
+				<Script
+					id="Absence-banner"
+					async
+					strategy="afterInteractive"
+					src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4808715803551092`}
+					crossOrigin="anonymous"
+				/>
+			</head>
 			<body className={`${inter.className} bg-wheat text-navy dark:bg-navy dark:text-wheat`}>{children}</body>
 		</html>
 	);
